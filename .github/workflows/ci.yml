@@ -27,6 +27,7 @@ jobs:
         id: client_build
         continue-on-error: true
         run: |
+          set +e
           docker build -f client/Dockerfile -t client-check client/ > client_build.log 2>&1
           EXIT_CODE=$?
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
@@ -36,6 +37,7 @@ jobs:
         id: server_build
         continue-on-error: true
         run: |
+          set +e
           docker build -f server/Dockerfile -t server-check server/ > server_build.log 2>&1
           EXIT_CODE=$?
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
@@ -61,12 +63,12 @@ jobs:
 
             ### 🔧 Client Build Log
             \`\`\`
-            ${clientLog.slice(0, 1000)}
+            ${clientLog}
             \`\`\`
 
             ### 🔧 Server Build Log
             \`\`\`
-            ${serverLog.slice(0, 1000)}
+            ${serverLog}
             \`\`\`
             `;
 
