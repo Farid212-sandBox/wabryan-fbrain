@@ -8,4 +8,6 @@ RUN yarn install
 
 COPY . .
 
-CMD ["yarn", "dev", "--host"]
+RUN yarn build
+
+CMD ["yarn", "preview", "--host"]
