@@ -4,10 +4,10 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y build-essential gcc libpq-dev \
     && pip install poetry==2.1.2 \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml ./
 ENV POETRY_VIRTUALENVS_CREATE=false
-RUN poetry install --no-interaction --no-ansi --no-root
+RUN poetry install --no-root
 
 COPY . .
