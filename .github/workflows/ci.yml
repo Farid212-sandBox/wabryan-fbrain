@@ -20,7 +20,7 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0 
+          fetch-depth: 0
 
       # Build client
       - name: 🐳 Build client Docker image
@@ -42,7 +42,6 @@ jobs:
           EXIT_CODE=$?
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
 
-         
       # Create issue if any build failed
       - name: 🚨 Create issue on build/test failure
         if: ${{ steps.client_build.outputs.exit_code != '0' || steps.server_build.outputs.exit_code != '0' }}
@@ -53,8 +52,8 @@ jobs:
             const fs = require('fs');
             const prNumber = context.payload.pull_request.number;
             const { owner, repo } = context.repo;
-            const clientExit = ${{ steps.client.outputs.exit_code }};
-            const serverExit = ${{ steps.server.outputs.exit_code }};
+            const clientExit = ${{ steps.client_build.outputs.exit_code }};
+            const serverExit = ${{ steps.server_build.outputs.exit_code }};
             const clientLog = fs.readFileSync('client_build.log', 'utf8');
             const serverLog = fs.readFileSync('server_build.log', 'utf8');
 
